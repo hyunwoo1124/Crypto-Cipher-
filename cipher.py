@@ -2,7 +2,8 @@
 
 #parser that allows cmd line to take argument into the program
 import argparse
-
+#while (!success) { success = try() }
+# that up there gents is the key to get a job at FANG
 #Implementing flags...
 def main():
     parser = argparse.ArgumentParser(description="Five Classic Ciphers.")
@@ -13,9 +14,10 @@ def main():
     parser.add_argument('-O', '--Output', type = str, metavar='', required=True, help ='The file to which the output shall be written.')
 
     args = parser.parse_args()
+
     print(args)
     return args
-    
+
 # it shall be playfair(), vignere() and more
 
 # Definitions to be implemented...
@@ -36,7 +38,7 @@ def RailfenceEnc(plaintext, key):
     result = ""
 
     #Creating a Matrix with for loop to expand the matrix
-    matrix = [["" for x in range(len(plaintext))] for y in range(key)]
+    matrix = [["\n" for x in range(len(plaintext))] for y in range(key)]
     
     # intiail variable to further use for the next code
     increment = 1
@@ -94,7 +96,10 @@ def RailfenceDec(ciphertext, key):
 def menu_switch(args):
    if (args.Cipher == 'RFC' and args.Type == 'ENC'):
        with open(args.Input, 'r') as rf:
-          RailfenceEnc(rf, args.key)
+          args.Output = RailfenceEnc(rf, args.Key)
+          with open(args.output, 'a') as wf:
+            print(wf)
+            
 
    if (args.Cipher == 'RFC' and args.Type == 'DEC'):
         with open(args.Input,'r') as rf:
@@ -105,5 +110,4 @@ def menu_switch(args):
 if __name__ == '__main__':
     info()
     args = main()
-    #menu_switch(args.Cipher, args.Type, args.Input, args.Output)
     menu_switch(args)
