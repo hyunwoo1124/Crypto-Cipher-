@@ -14,7 +14,8 @@ def main():
 
     args = parser.parse_args()
     print(args)
-
+    return args
+    
 # it shall be playfair(), vignere() and more
 
 # Definitions to be implemented...
@@ -90,9 +91,19 @@ def RailfenceDec(ciphertext, key):
                 result.append(matrix[col][row])
     return ("".join(result))
   
+def menu_switch(args):
+   if (args.Cipher == 'RFC' and args.Type == 'ENC'):
+       with open(args.Input, 'r') as rf:
+          RailfenceEnc(rf, args.key)
 
-#main function
+   if (args.Cipher == 'RFC' and args.Type == 'DEC'):
+        with open(args.Input,'r') as rf:
+            RailfenceDec(rf,args.Key)
+        with open(args.Input, 'r') as rf:
+            RailfenceDec(rf,args.Key)
+
 if __name__ == '__main__':
-
     info()
-    main()
+    args = main()
+    #menu_switch(args.Cipher, args.Type, args.Input, args.Output)
+    menu_switch(args)
