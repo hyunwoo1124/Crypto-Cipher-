@@ -92,7 +92,40 @@ def RailfenceDec(ciphertext, key):
             if matrix[col, row] != "\n":
                 result.append(matrix[col][row])
     return ("".join(result))
-  
+
+def CeasCrypt(plaintext, key):
+    message = message.upper()
+    alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    result = " "
+
+    for letter in plaintext:
+        if letter in alpha:
+            letter_index = (alpha.fins(letter) + key) % len(alpha)
+
+            result = result + alpha[letter_index]
+        else:
+            result = result + letter
+
+
+    return result
+
+def CeasDecrypt(cyphertext, key):
+    message = message.upper()
+    alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    result = " "
+
+    for letter in cyphertext:
+        if letter in alpha:
+            letter_index = (alpha.fins(letter) - key) % len(alpha)
+
+            result = result +alpha[letter_index]
+        else:
+            result = result + letter
+
+
+    return result
+
+
 def menu_switch(args):
    if (args.Cipher == 'RFC' and args.Type == 'ENC'):
        with open(args.Input, 'r') as rf:
