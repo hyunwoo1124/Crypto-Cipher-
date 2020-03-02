@@ -30,6 +30,7 @@ def info():
     print("\t -RFC: Railfence\n")
     print("\t -VIG: Vigenre\n")
     print("\t -CES: Caesar\n")
+    print("\t -MAC: Monoalphabetic\n")
     print("\nFormat: ./cipher  -C <CIPHERNAME> -K <KEY> -T <ENC/DEC>  -I <INPUTFILE> -O <OUTPUTFILE>\n")
     print("\nUse the flag -h to get help if needed...\n")
 
@@ -92,7 +93,22 @@ def RailfenceDec(ciphertext, key):
             if matrix[col, row] != "\n":
                 result.append(matrix[col][row])
     return ("".join(result))
-  
+
+
+def Monoalphabetic(plaintext, key):
+    Aphabet = 'abcdefghijklmnopqrstuvwxyz'
+    cipherAphabet = key + Aphabet
+
+    encryptmessage = []
+
+    for i in range(len(plaintext)):
+        for j in range(len(Aphabet)):
+            if  Aphabet[j] == plaintext[i]:
+                print (plaintext[i], "\t", Aphabet[j])
+                encryptmessage.append(cipherAphabet[j])
+    return ("".join(encryptmessage))
+    
+
 def menu_switch(args):
    if (args.Cipher == 'RFC' and args.Type == 'ENC'):
        with open(args.Input, 'r') as rf:
