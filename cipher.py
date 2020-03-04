@@ -2,6 +2,7 @@
 
 #parser that allows cmd line to take argument into the program
 import argparse
+#from itertools import cycle
 #while (!success) { success = try() }
 # that up there gents is the key to get a job at FANG
 #Implementing flags...
@@ -35,11 +36,41 @@ def info():
 
 # This module takes the plaintext and key to encrypt into ciphertext
 def RailfenceEnc(plaintext, key):
+
     result = ""
 
     #Creating a Matrix with for loop to expand the matrix
-    matrix = [["\n" for x in range(len(plaintext))] for y in range(key)]
+    #matrix = [["\n" for x in range(len(plaintext))] for y in range(key)]
     
+    # The key index
+    keyOffset = 0
+    
+    index = 0
+    
+    intKey = int(key)
+
+    #key = int(args.Key)
+    #key = 3
+    #plaintext = "helloworld"
+    while keyOffset < intKey:
+               
+        index = keyOffset
+
+        while index < len(plaintext):
+        
+           if len(plaintext) > index:
+               result += plaintext[index]
+
+               index += intKey
+        
+        keyOffset += 1
+        index = 0
+
+    return result
+
+    #print(result)
+    #exit(1)
+    """
     # intiail variable to further use for the next code
     increment = 1
     row, col = 0, 0
@@ -55,12 +86,30 @@ def RailfenceEnc(plaintext, key):
         #connecting each character one by one from the matrix; concatenating
         result += "".join(list)
     return result 
+    """
+   
 # This module takes the ciphertext and key to decrypt into plaintext
 def RailfenceDec(ciphertext, key):
+    # Getting the actual key #
+    keyLength = key
+
+    keyRemainder = len(ciphertext) % key
+
+    row1
+
+
+
+
+   
+   
+   
+   
+   
+   
     #Since we dont konw the  exact key at the moment we need
     #Boolean function to determine if its end of the row or 
     #the place value of the column
-
+    """
     result = []
     #The Matrix for the railfence decrypt
     matrix= [["" for x in range(len(ciphertext))] for y in range(key)]
@@ -92,14 +141,19 @@ def RailfenceDec(ciphertext, key):
             if matrix[col, row] != "\n":
                 result.append(matrix[col][row])
     return ("".join(result))
-  
+  """
+
 def menu_switch(args):
    if (args.Cipher == 'RFC' and args.Type == 'ENC'):
        with open(args.Input, 'r') as rf:
-          args.Output = RailfenceEnc(rf, args.Key)
-          with open(args.output, 'a') as wf:
-            print(wf)
-            
+           answer = RailfenceEnc(rf.read(), args.Key)
+           with open (args.Output, 'a') as wf:
+               wf.write(answer)
+            # Alex write yourc cod here
+      
+      
+
+
 
    if (args.Cipher == 'RFC' and args.Type == 'DEC'):
         with open(args.Input,'r') as rf:
@@ -109,5 +163,6 @@ def menu_switch(args):
 
 if __name__ == '__main__':
     info()
+    # Object of args passed into return value from main def
     args = main()
     menu_switch(args)
