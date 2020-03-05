@@ -23,7 +23,7 @@ def main():
 # Definitions to be implemented...
 
 def info():
-    print("The Classic 5 Cryptography Ciphers\n")
+    print("The Classic 6 Cryptography Ciphers\n")
     print("Cipher Name: Is the name of the cipher. Valid names are:\n")
     print("\t -PLF: Playfair\n")
     print("\t -RTS: Row Trasposition\n")
@@ -95,33 +95,63 @@ def RailfenceDec(ciphertext, key):
     return ("".join(result))
 
 
-def Monoalphabetic(plaintext, key):
-    Aphabet = 'abcdefghijklmnopqrstuvwxyz'
-    cipherAphabet = key + Aphabet
-
+def MonoalphabeticEnc(plaintext, key):
+    key.lower()
+    if len(key) != 26:
+        print ("Please enter 26 key for this cipher")
+    Alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    cipherAlphabet = key
     encryptmessage = []
-
     for i in range(len(plaintext)):
-        for j in range(len(Aphabet)):
-            if  Aphabet[j] == plaintext[i]:
-                print (plaintext[i], "\t", Aphabet[j])
-                encryptmessage.append(cipherAphabet[j])
+        for j in range(len(Alphabet)):
+            if  Alphabet[j] == plaintext[i]:
+                encryptmessage.append(cipherAlphabet[j])
+                break
     return ("".join(encryptmessage))
-    
+
+def MonoalphabeticDec(ciphertext, key):
+    key.lower()
+    if len(key) != 26:
+        print ("Please enter 26 key for this cipher")
+    Alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    cipherAlphabet = key
+    decryptmessage = []
+    for i in range(len(ciphertext)):
+        for j in range(len(Alphabet)):
+            if  cipherAlphabet[j] == ciphertext[i]:
+                decryptmessage.append(Alphabet[j])
+                break
+    return ("".join(decryptmessage))
 
 def menu_switch(args):
-   if (args.Cipher == 'RFC' and args.Type == 'ENC'):
-       with open(args.Input, 'r') as rf:
-          args.Output = RailfenceEnc(rf, args.Key)
-          with open(args.output, 'a') as wf:
+    
+    if (args.Cipher == 'RFC' and args.Type == 'ENC'):
+        with open(args.Input, 'r') as rf:
+            args.Output = RailfenceEnc(rf, args.Key)
+        with open(args.output, 'a') as wf:
             print(wf)
             
 
-   if (args.Cipher == 'RFC' and args.Type == 'DEC'):
+    if (args.Cipher == 'RFC' and args.Type == 'DEC'):
         with open(args.Input,'r') as rf:
             RailfenceDec(rf,args.Key)
         with open(args.Input, 'r') as rf:
             RailfenceDec(rf,args.Key)
+
+    if (args.Cipher == 'MAC' and args.Type == 'ENC'):
+        with open(args.Input, 'r') as plaintext:
+            args.Out = MonoalphabeticEnc(plaintext, args.Key)
+        with open(args.output, 'a') as ciphertext:
+            print(ciphertext)
+    
+    if (args.Cipher == 'MAC' and args.Type == 'DEC'):
+        with open(args.Input, 'r') as ciphertext:
+            MonoalphabeticDec(cyphertext, args.Key)
+        with open(arge.output, 'a') as plaintext:
+            print(plaintext)
+
+  
+
 
 if __name__ == '__main__':
     info()
