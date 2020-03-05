@@ -24,13 +24,14 @@ def main():
 # Definitions to be implemented...
 
 def info():
-    print("The Classic 5 Cryptography Ciphers\n")
+    print("The Classic 6 Cryptography Ciphers\n")
     print("Cipher Name: Is the name of the cipher. Valid names are:\n")
     print("\t -PLF: Playfair\n")
     print("\t -RTS: Row Trasposition\n")
     print("\t -RFC: Railfence\n")
     print("\t -VIG: Vigenre\n")
     print("\t -CES: Caesar\n")
+    print("\t -MAC: Monoalphabetic Cipher\n")
     print("\nFormat: ./cipher  -C <CIPHERNAME> -K <KEY> -T <ENC/DEC>  -I <INPUTFILE> -O <OUTPUTFILE>\n")
     print("\nUse the flag -h to get help if needed...\n")
 
@@ -99,7 +100,7 @@ def RailfenceDec(ciphertext, key):
             if len(rail) > i:
                 string += rail[i]
     return string
-    
+
 def MonoalphabeticDec(ciphertext, key):
     key.lower()
     if len(key) != 26:
