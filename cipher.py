@@ -90,12 +90,35 @@ def RailfenceEnc(plaintext, key):
    
 # This module takes the ciphertext and key to decrypt into plaintext
 def RailfenceDec(ciphertext, key):
-    # Getting the actual key #
-    keyLength = key
 
+    #length of key
+    # should be ciphertext // key but ours have an input key section
+    keyLength = int(key)
+    key = int(key)
+
+    #Remainder of key length with modulus
     keyRemainder = len(ciphertext) % key
 
-    row1
+    keylengths = key * [keyLength]
+
+    for i in range(0, keyRemainder):
+        keylengths[i] += 1
+    keylengths.reverse()
+
+    rails =[]
+
+    for length in keylengths:
+        length.append(ciphertext[0:length])
+        ciphertext = ciphertext[length:]
+    rails.reverse()
+
+    string = ''
+
+    for i in range(keylengths + 1):
+        for rail in rails:
+            if len(rail) > i:
+                string += rail[i]
+    return string
 
 
 
@@ -157,9 +180,9 @@ def menu_switch(args):
 
    if (args.Cipher == 'RFC' and args.Type == 'DEC'):
         with open(args.Input,'r') as rf:
-            RailfenceDec(rf,args.Key)
-        with open(args.Input, 'r') as rf:
-            RailfenceDec(rf,args.Key)
+            answer = RailfenceDec(rf.read(),args.Key)
+            with open(args.Input, 'a') as wf:
+                wf.write(answer)
 
 if __name__ == '__main__':
     info()
