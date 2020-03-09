@@ -35,113 +35,72 @@ def info():
     print("\nFormat: ./cipher  -C <CIPHERNAME> -K <KEY> -T <ENC/DEC>  -I <INPUTFILE> -O <OUTPUTFILE>\n")
     print("\nUse the flag -h to get help if needed...\n")
 
-# This module takes the plaintext and key to encrypt into ciphertext
-def RailfenceEnc(plaintext, key):
+'''
+Monoalphabetic Cipher will take in 2 variable
+Key = random alphabet order
+example: fghijklabcdemnopqrstuvwxyz
+plaintext for Encryption
+ciphertext for Decryption
+'''
+# For Encryption, user will pass in a plain text and a key
+def MonoalphabeticEnc(plaintext, key):
+    #plaintext will be convert to lowercase for easy print result
+    key.lower()
 
-    result = ""
-
-    #Creating a Matrix with for loop to expand the matrix
-    #matrix = [["\n" for x in range(len(plaintext))] for y in range(key)]
-    
-    # The key index
-    keyOffset = 0
-    
-    index = 0
-    
-    intKey = int(key)
-
-    #key = int(args.Key)
-    #key = 3
-    #plaintext = "helloworld"
-    while keyOffset < intKey:
-               
-        index = keyOffset
-
-        while index < len(plaintext):
-        
-           if len(plaintext) > index:
-               result += plaintext[index]
-
-               index += intKey
-        
-        keyOffset += 1
-        index = 0
-
-    return result
-   
-# This module takes the ciphertext and key to decrypt into plaintext
-def RailfenceDec(ciphertext, key):
-
-    #length of key
-    # should be ciphertext // key but ours have an input key section
-    keyLength = int(key)
-    key = int(key)
-
-    #Remainder of key length with modulus
-    keyRemainder = len(ciphertext) % key
-
-    keylengths = key * [keyLength]
-
-    for i in range(0, keyRemainder):
-        keylengths[i] += 1
-    keylengths.reverse()
-
-    rails =[]
-
-    for length in keylengths:
-        length.append(ciphertext[0:length])
-        ciphertext = ciphertext[length:]
-    rails.reverse()
-
-    string = ''
-
-    for i in range(keylengths + 1):
-        for rail in rails:
-            if len(rail) > i:
-                string += rail[i]
-    return string
+    #we required 26 unique key for this ciper
+    if len(key) != 26:
+        print ("Please enter 26 key for this cipher")
+    else:
+        #first we will inital an alphabet to encrypt plaintext
+        Alphabet = 'abcdefghijklmnopqrstuvwxyz'
+        #Key is consider as cipherAlphabet cause the order is random
+        cipherAlphabet = key
+        #We will store encrypted character into an array encryptmessage
+        encryptmessage = []
+        #First, we will loop through the length of plaintext
+        for i in range(len(plaintext)):
+            #While looping through length of plaintext, we will loop through Alphabet
+            for j in range(len(Alphabet)):
+                #if we find a match of plaintext and alphabet
+                if  Alphabet[j] == plaintext[i]:
+                    #We will use the index found in the alphabet and search through our cipherAlphabet
+                    #Then, we will pull out the character in cipherAlphabet where index = alphabet index
+                    #and save it into encryptmessage
+                    encryptmessage.append(cipherAlphabet[j])
+                    #Once we found a index position we can break from alphabet loop and continue with plaintext loop
+                    break
+        #merge character in the array encryptmessage into a string
+        return ("".join(encryptmessage))
 
 def MonoalphabeticDec(ciphertext, key):
+    #ciphertext will be convert to lowercase for easy print result
     key.lower()
+    #we required 26 unique key for this cipher
     if len(key) != 26:
         print ("Please enter 26 key for this cipher")
-
-    Alphabet = 'abcdefghijklmnopqrstuvwxyz'
-    cipherAlphabet = key
-    decryptmessage = []
-    for i in range(len(ciphertext)):
-        for j in range(len(Alphabet)):
-            if  cipherAlphabet[j] == ciphertext[i]:
-                decryptmessage.append(Alphabet[j])
-                break
-    return ("".join(decryptmessage))
-
-def MonoalphabeticEnc(plaintext, key):
-    key.lower()
-    if len(key) != 26:
-        print ("Please enter 26 key for this cipher")
-    Alphabet = 'abcdefghijklmnopqrstuvwxyz'
-    cipherAlphabet = key
-    encryptmessage = []
-    for i in range(len(plaintext)):
-        for j in range(len(Alphabet)):
-            if  Alphabet[j] == plaintext[i]:
-                encryptmessage.append(cipherAlphabet[j])
-                break
-    return ("".join(encryptmessage))
-
+    else: 
+        #first we will inital an alphabet to decrypt ciphertext
+        Alphabet = 'abcdefghijklmnopqrstuvwxyz'
+        #Key is consider as cipherAlphabet cause the order is random
+        cipherAlphabet = key
+        #We will store decrypted character into an array decryptmessage
+        decryptmessage = []
+        #First, we will loop through the length of ciphertext
+        for i in range(len(ciphertext)):
+            #While looping through length of ciphertext, we will loop through cipherAlphabet
+            for j in range(len(Alphabet)):
+                #if we find a match of ciphertext and cipherAlphabet
+                if  cipherAlphabet[j] == ciphertext[i]:
+                    #We will use the index found in the cipherAlphabet and search through our Alphabet
+                    #Then, we will pull out the character in Alphabet where index = cipherAlphabet index
+                    #and save it into decryptmessage
+                    decryptmessage.append(Alphabet[j])
+                    #Once we found a index position we can break from alphabet loop and continue with ciphertext loop
+                    break
+        #merge character in the array decryptmessage into a string
+        return ("".join(decryptmessage))
 
 def menu_switch(args):
-   if (args.Cipher == 'RFC' and args.Type == 'ENC'):
-       with open(args.Input, 'r') as rf:
-           answer = RailfenceEnc(rf.read(), args.Key)
-           with open (args.Output, 'a') as wf:
-               wf.write(answer)
-   if (args.Cipher == 'RFC' and args.Type == 'DEC'):
-        with open(args.Input,'r') as rf:
-            answer = RailfenceDec(rf.read(),args.Key)
-            with open(args.Input, 'a') as wf:
-                wf.write(answer)
    if (args.Cipher == 'MAC' and args.Type == 'ENC'):
        with open(args.Input, 'r') as rf:
            answer = MonoalphabeticEnc(rf.read(), args.Key)
