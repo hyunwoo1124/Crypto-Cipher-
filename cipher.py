@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 
 #parser that allows cmd line to take argument into the program
 import argparse
@@ -91,6 +90,41 @@ def RailfenceEnc(plaintext, key):
 # This module takes the ciphertext and key to decrypt into plaintext
 def RailfenceDec(ciphertext, key):
 
+    #Utilizing  division of length and division of modulus to get the
+    #length of the fence
+    intKey = int(key)
+    #Getting the char length
+    keyLength = len(ciphertext) // intKey 
+    #Getting the remainder of char length
+    keyRemainder = len(ciphertext) % intKey
+
+    #container
+    totalLength = intKey * [keyLength]
+
+    for i in range(0, keyRemainder):
+        totalLength[i] += 1
+
+    totalLength.reverse()
+
+    storingChar = []
+
+    for length in totalLength:
+        storingChar.append(ciphertext[0:length])
+        ciphertext = ciphertext[length:]
+
+    storingChar.reverse()
+
+    decrypted = ''
+
+    for i in range(totalLength + 1):
+        for char in storingChar:
+            if len(char) > i:
+                decrypted += char[i]
+    return decrypted
+
+   
+   
+    '''
     #length of key
     # should be ciphertext // key but ours have an input key section
     keyLength = int(key)
@@ -119,7 +153,7 @@ def RailfenceDec(ciphertext, key):
             if len(rail) > i:
                 string += rail[i]
     return string
-
+    '''
 
 ########################################################################
 #Vigenere Encryption
@@ -143,7 +177,7 @@ def vigenereEnc(plaintext,key):
 
         #we turn the ASCII value back to the char and add it to the list encString
         encString.append(chr(posLetter))
-return encString
+    return encString
 
 ########################################################################
 #Vigenere Decryption
@@ -167,13 +201,13 @@ def vigenereDec(ciphertext,key):
 
         #we turn the ASCII value back to the char and add it to the list deccString
         decString.append(chr(posLetter))
-return decString
+    return decString
    
    
     #Since we dont konw the  exact key at the moment we need
     #Boolean function to determine if its end of the row or 
     #the place value of the column
-    '''
+'''
     result = []
     #The Matrix for the railfence decrypt
     matrix= [["" for x in range(len(ciphertext))] for y in range(key)]
@@ -205,7 +239,7 @@ return decString
             if matrix[col, row] != "\n":
                 result.append(matrix[col][row])
     return ("".join(result))
-  '''
+'''
 
 def menu_switch(args):
    if (args.Cipher == 'RFC' and args.Type == 'ENC'):
@@ -213,16 +247,11 @@ def menu_switch(args):
            answer = RailfenceEnc(rf.read(), args.Key)
            with open (args.Output, 'a') as wf:
                wf.write(answer)
-            # Alex write yourc cod here
-      
-      
-
-
 
    if (args.Cipher == 'RFC' and args.Type == 'DEC'):
         with open(args.Input,'r') as rf:
             answer = RailfenceDec(rf.read(),args.Key)
-            with open(args.Input, 'a') as wf:
+            with open(args.OutPut, 'a') as wf:
                 wf.write(answer)
 
 if __name__ == '__main__':
