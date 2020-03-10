@@ -29,7 +29,7 @@ def info():
     print("\t -PLF: Playfair\n")
     print("\t -RTS: Row Trasposition\n")
     print("\t -RFC: Railfence\n")
-    print("\t -VIG: Vigenre\n")
+    print("\t -VIG: Vigenere\n")
     print("\t -CES: Caesar\n")
     print("\nFormat: ./cipher  -C <CIPHERNAME> -K <KEY> -T <ENC/DEC>  -I <INPUTFILE> -O <OUTPUTFILE>\n")
     print("\nUse the flag -h to get help if needed...\n")
@@ -127,13 +127,19 @@ def RailfenceDec(ciphertext, key):
 ########################################################################
 def vigenereEnc(plaintext,key):
     index = 0
+    i=0
     #store all char values from the ASCII position
     encString = []
     for index in range(len(plaintext)):
 
         #Gets the individual char from the plaintext and key strings
         textPos = plaintext[index]
-        keyPos = key[index]
+        lengthkey =len(key)
+        if i == lengthkey:
+            i=0
+            keyPos = key[i]
+        else:
+            keyPos = key[i]
 
         #Look at ASCII position of the Plaintext + ASCII Position of the Key mod 26 because there are 26 letters in the alphabet 
         posLetter = (ord(textPos)+ord(keyPos)) % 26
@@ -143,7 +149,7 @@ def vigenereEnc(plaintext,key):
 
         #we turn the ASCII value back to the char and add it to the list encString
         encString.append(chr(posLetter))
-    return encString
+    return ("".join(encString))
 
 ########################################################################
 #Vigenere Decryption
@@ -151,13 +157,19 @@ def vigenereEnc(plaintext,key):
 ########################################################################
 def vigenereDec(ciphertext,key):
     index = 0
+    i=0
     #store all char values from the ASCII position
     decString = []
     for index in range(len(ciphertext)):
 
         #Gets the individual char from the plaintext and key strings
         textPos = ciphertext[index]
-        keyPos = key[index]
+        lengthkey =len(key)
+        if i == lengthkey:
+            i=0
+            keyPos = key[i]
+        else:
+            keyPos = key[i]
 
         #Look at ASCII position of the Plaintext - ASCII Position of the Key mod 26 because there are 26 letters in the alphabet
         posLetter = (ord(textPos)-ord(keyPos)+26)%26
@@ -167,7 +179,7 @@ def vigenereDec(ciphertext,key):
 
         #we turn the ASCII value back to the char and add it to the list deccString
         decString.append(chr(posLetter))
-    return decString
+    return ("".join(decString))
    
    
     #Since we dont konw the  exact key at the moment we need
@@ -208,7 +220,7 @@ def vigenereDec(ciphertext,key):
   '''
 
 def menu_switch(args):
-   if (args.Cipher == 'RFC' and args.Type == 'ENC'):
+    if (args.Cipher == 'RFC' and args.Type == 'ENC'):
        with open(args.Input, 'r') as rf:
            answer = RailfenceEnc(rf.read(), args.Key)
            with open (args.Output, 'a') as wf:
@@ -225,7 +237,7 @@ def menu_switch(args):
        with open(args.Input, 'r') as rf:
            answer = vigenereEnc(rf.read(), args.Key)
            with open (args.Output, 'a') as wf:
-               wf.write(answer) 
+               wf.write(answer)  
 
     if (args.Cipher == 'VIG' and args.Type == 'DEC'):
         with open(args.Input,'r') as rf:
