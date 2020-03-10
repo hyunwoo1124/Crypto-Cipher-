@@ -131,7 +131,7 @@ def vigenereEnc(plaintext,key):
     #store all char values from the ASCII position
     encString = []
     for index in range(len(plaintext)):
-
+        
         #Gets the individual char from the plaintext and key strings
         textPos = plaintext[index]
         lengthkey =len(key)
@@ -145,7 +145,7 @@ def vigenereEnc(plaintext,key):
         posLetter = (ord(textPos)+ord(keyPos)) % 26
 
         #posLetter now gets its new position from the first ASCII value
-        posLetter += ord("A")
+        posLetter += ord("a")
 
         #we turn the ASCII value back to the char and add it to the list encString
         encString.append(chr(posLetter))
@@ -161,7 +161,7 @@ def vigenereDec(ciphertext,key):
     #store all char values from the ASCII position
     decString = []
     for index in range(len(ciphertext)):
-
+        #ciphertext.upper()
         #Gets the individual char from the plaintext and key strings
         textPos = ciphertext[index]
         lengthkey =len(key)
@@ -172,10 +172,10 @@ def vigenereDec(ciphertext,key):
             keyPos = key[i]
 
         #Look at ASCII position of the Plaintext - ASCII Position of the Key mod 26 because there are 26 letters in the alphabet
-        posLetter = (ord(textPos)-ord(keyPos)+26)%26
+        posLetter = ((ord(textPos)-ord(keyPos))+26)%26
 
         #posLetter now gets its position from the first ASCII value
-        posLetter += ord("A")
+        posLetter += ord("a")
 
         #we turn the ASCII value back to the char and add it to the list deccString
         decString.append(chr(posLetter))

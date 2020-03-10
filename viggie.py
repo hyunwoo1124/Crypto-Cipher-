@@ -19,7 +19,6 @@ def alpPosToLetter(alpPos):
 #
 
 
-
 key = "hello"
 index = 0
 
