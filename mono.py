@@ -14,7 +14,6 @@ def MonoalphabeticDec(ciphertext, key):
     key.lower()
     if len(key) != 26:
         print ("Please enter 26 key for this cipher")
-
     Alphabet = 'abcdefghijklmnopqrstuvwxyz'
     cipherAlphabet = key
     decryptmessage = []
@@ -47,16 +46,3 @@ print (encrypted)
 decrypted = MonoalphabeticDec(encrypted, key)
 print (decrypted)
 
-   if (args.Cipher == 'MAC' and args.Type == 'ENC'):
-       with open(args.Input, 'r') as rf:
-           answer = MonoalphabeticEnc(rf.read(), args.Key)
-           with open (args.Output, 'a') as wf:
-               wf.write(answer)
-
-
-
-   if (args.Cipher == 'MAC' and args.Type == 'DEC'):
-        with open(args.Input,'r') as rf:
-            answer = MonoalphabeticDec(rf.read(),args.Key)
-            with open(args.Output, 'a') as wf:
-                wf.write(answer)

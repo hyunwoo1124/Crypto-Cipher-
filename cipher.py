@@ -44,8 +44,6 @@ ciphertext for Decryption
 '''
 # For Encryption, user will pass in a plain text and a key
 def MonoalphabeticEnc(plaintext, key):
-    #plaintext will be convert to lowercase for easy print result
-    key.lower()
 
     #we required 26 unique key for this ciper
     if len(key) != 26:
@@ -53,6 +51,7 @@ def MonoalphabeticEnc(plaintext, key):
     else:
         #first we will inital an alphabet to encrypt plaintext
         Alphabet = 'abcdefghijklmnopqrstuvwxyz'
+        
         #Key is consider as cipherAlphabet cause the order is random
         cipherAlphabet = key
         #We will store encrypted character into an array encryptmessage
@@ -73,8 +72,6 @@ def MonoalphabeticEnc(plaintext, key):
         return ("".join(encryptmessage))
 
 def MonoalphabeticDec(ciphertext, key):
-    #ciphertext will be convert to lowercase for easy print result
-    key.lower()
     #we required 26 unique key for this cipher
     if len(key) != 26:
         print ("Please enter 26 key for this cipher")
@@ -107,10 +104,10 @@ def menu_switch(args):
            with open (args.Output, 'a') as wf:
                wf.write(answer)
    if (args.Cipher == 'MAC' and args.Type == 'DEC'):
-        with open(args.Input,'r') as rf:
-            answer = MonoalphabeticDec(rf.read(),args.Key)
-            with open(args.Output, 'a') as wf:
-                wf.write(answer)
+       with open(args.Input, 'r') as rf:
+           answer = MonoalphabeticDec(rf.read(), args.Key)
+           with open (args.Output, 'a') as wf:
+               wf.write(answer)
                 
 
 if __name__ == '__main__':
