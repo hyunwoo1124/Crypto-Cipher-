@@ -1,6 +1,6 @@
 
 Author: Hyun Woo Kim  | Computer Science Major | hyunwoo777@csu.fullerton.edu
-        <  >
+        Raymond Laurente | Computer Science Major | raymondlaruente@csu.fullerton.edu
         <  >
         <  >
 Program Language:
