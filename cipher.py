@@ -188,7 +188,7 @@ def playfairEnc(plaintext, key):
     msg=msg.upper()
     msg=msg.replace(" ", "")
     answer=str("Encrypted Text: ")             
-    i=0
+    
     def matrix(x,y,initial):
         return [[initial for i in range(x)] for j in range(y)]
         
@@ -240,6 +240,7 @@ def playfairEnc(plaintext, key):
     if len(msg)%2!=0:
         msg=msg[:]+'X'
     print("CIPHER TEXT:",end=' ')
+    i=0
     while i<len(msg):
         loc=list()
         loc=locindex(msg[i])
