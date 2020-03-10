@@ -131,7 +131,6 @@ def vigenereEnc(plaintext,key):
     #store all char values from the ASCII position
     encString = []
     for index in range(len(plaintext)):
-        
         #Gets the individual char from the plaintext and key strings
         textPos = plaintext[index]
         lengthkey =len(key)
@@ -161,7 +160,6 @@ def vigenereDec(ciphertext,key):
     #store all char values from the ASCII position
     decString = []
     for index in range(len(ciphertext)):
-        #ciphertext.upper()
         #Gets the individual char from the plaintext and key strings
         textPos = ciphertext[index]
         lengthkey =len(key)
