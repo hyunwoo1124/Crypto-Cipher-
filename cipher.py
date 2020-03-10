@@ -261,8 +261,9 @@ def playfairDec(ciphertext, key):
     pfkey=pfkey.upper()
     msg=ciphertext
     msg=msg.upper()
-    msg=msg.replace(" ", "")             
-    i=0
+    msg=msg.replace(" ", "")
+    answer=str("Decrypted Text: ")              
+    
     def matrix(x,y,initial):
         return [[initial for i in range(x)] for j in range(y)]
         
@@ -313,13 +314,13 @@ def playfairDec(ciphertext, key):
         loc1=list()
         loc1=locindex(msg[i+1])
         if loc[1]==loc1[1]:
-            print("{}{}".format(my_matrix[(loc[0]-1)%5][loc[1]],my_matrix[(loc1[0]-1)%5][loc1[1]]),end=' ')
+            answer=answer + ("{}{}".format(my_matrix[(loc[0]-1)%5][loc[1]],my_matrix[(loc1[0]-1)%5][loc1[1]]))
         elif loc[0]==loc1[0]:
-            print("{}{}".format(my_matrix[loc[0]][(loc[1]-1)%5],my_matrix[loc1[0]][(loc1[1]-1)%5]),end=' ')  
+            answer=answer + ("{}{}".format(my_matrix[loc[0]][(loc[1]-1)%5],my_matrix[loc1[0]][(loc1[1]-1)%5]))  
         else:
-            print("{}{}".format(my_matrix[loc[0]][loc1[1]],my_matrix[loc1[0]][loc[1]]),end=' ')    
+            answer=answer + ("{}{}".format(my_matrix[loc[0]][loc1[1]],my_matrix[loc1[0]][loc[1]]))    
         i=i+2  
-
+    return answer
     #Since we dont konw the  exact key at the moment we need
     #Boolean function to determine if its end of the row or 
     #the place value of the column
@@ -389,6 +390,11 @@ def menu_switch(args):
             with open(args.Output, 'a') as wf:
                 wf.write(answer)
                 
+    if (args.Cipher == 'PLF' and args.Type == 'DEC'):
+        with open(args.Input,'r') as rf:
+            answer = vigenereDec(rf.read(),args.Key)
+            with open(args.Output, 'a') as wf:
+                wf.write(answer)                
 
 if __name__ == '__main__':
     info()
