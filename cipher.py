@@ -20,7 +20,6 @@ def main():
     return args
 
 # it shall be playfair(), vignere() and more
-
 # Definitions to be implemented...
 
 def info():
@@ -51,7 +50,6 @@ def MonoalphabeticEnc(plaintext, key):
     else:
         #first we will inital an alphabet to encrypt plaintext
         Alphabet = 'abcdefghijklmnopqrstuvwxyz'
-        
         #Key is consider as cipherAlphabet cause the order is random
         cipherAlphabet = key
         #We will store encrypted character into an array encryptmessage
