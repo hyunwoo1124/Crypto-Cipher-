@@ -143,7 +143,7 @@ def vigenereEnc(plaintext,key):
 
         #we turn the ASCII value back to the char and add it to the list encString
         encString.append(chr(posLetter))
-return encString
+    return encString
 
 ########################################################################
 #Vigenere Decryption
@@ -167,7 +167,7 @@ def vigenereDec(ciphertext,key):
 
         #we turn the ASCII value back to the char and add it to the list deccString
         decString.append(chr(posLetter))
-return decString
+    return decString
    
    
     #Since we dont konw the  exact key at the moment we need
@@ -214,15 +214,23 @@ def menu_switch(args):
            with open (args.Output, 'a') as wf:
                wf.write(answer)
             # Alex write yourc cod here
-      
-      
-
-
-
-   if (args.Cipher == 'RFC' and args.Type == 'DEC'):
+            
+    if (args.Cipher == 'RFC' and args.Type == 'DEC'):
         with open(args.Input,'r') as rf:
             answer = RailfenceDec(rf.read(),args.Key)
-            with open(args.Input, 'a') as wf:
+            with open(args.Output, 'a') as wf:
+                wf.write(answer)
+    
+    if (args.Cipher == 'VIG' and args.Type == 'ENC'):
+       with open(args.Input, 'r') as rf:
+           answer = vigenereEnc(rf.read(), args.Key)
+           with open (args.Output, 'a') as wf:
+               wf.write(answer) 
+
+    if (args.Cipher == 'VIG' and args.Type == 'DEC'):
+        with open(args.Input,'r') as rf:
+            answer = vigenereDec(rf.read(),args.Key)
+            with open(args.Output, 'a') as wf:
                 wf.write(answer)
 
 if __name__ == '__main__':
