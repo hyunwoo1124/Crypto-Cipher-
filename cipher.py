@@ -181,14 +181,18 @@ def vigenereDec(ciphertext,key):
     return ("".join(decString))
    
 def playfairEnc(plaintext, key):
+    #taking the key and removing spaces and capitalizing them
     pfkey=key
     pfkey=pfkey.replace(" ", "")
     pfkey=pfkey.upper()
+    #removing spaces and capitalizing the plaintext
     msg=plaintext
     msg=msg.upper()
     msg=msg.replace(" ", "")
+    #initialize answer as a string
     answer=str("")             
     
+    #matrix function
     def matrix(x,y,initial):
         return [[initial for i in range(x)] for j in range(y)]
         
@@ -212,6 +216,7 @@ def playfairEnc(plaintext, key):
                 pass    
             else:
                 result.append(chr(i))
+
     k=0
     #matrix creation
     my_matrix=matrix(5,5,0) 
@@ -222,7 +227,7 @@ def playfairEnc(plaintext, key):
     #get location of each character
     def locindex(c): 
         loc=list()
-        #making sure J&I are the same
+        #changing Js to Is
         if c=='J':
             c='I'
         for i ,j in enumerate(my_matrix):
@@ -231,16 +236,16 @@ def playfairEnc(plaintext, key):
                     loc.append(i)
                     loc.append(k)
                     return loc
-        #add X if repeating character
+    #add X if repeating character or if a letter is missing a pair
     for s in range(0,len(msg)+1,2):
         if s<len(msg)-1:
             if msg[s]==msg[s+1]:
                 msg=msg[:s+1]+'X'+msg[s+1:]
-    #adding X if message is odd number of characters
     if len(msg)%2!=0:
         msg=msg[:]+'X'
     
     i=0
+    #Encryption loop
     while i<len(msg):
         loc=list()
         loc=locindex(msg[i])
@@ -256,14 +261,18 @@ def playfairEnc(plaintext, key):
     return answer
 
 def playfairDec(ciphertext, key):
+    #taking the key and removing spaces and capitalizing them    
     pfkey=key
     pfkey=pfkey.replace(" ", "")
     pfkey=pfkey.upper()
+    #removing spaces and capitalizing cipher text
     msg=ciphertext
     msg=msg.upper()
     msg=msg.replace(" ", "")
+    #initialize answer as a string
     answer=str("")              
     
+    #matrix function
     def matrix(x,y,initial):
         return [[initial for i in range(x)] for j in range(y)]
         
@@ -297,7 +306,7 @@ def playfairDec(ciphertext, key):
     #get location of each character
     def locindex(c): 
         loc=list()
-        #making sure J&I are the same
+        #replacing Js with Is
         if c=='J':
             c='I'
         for i ,j in enumerate(my_matrix):
@@ -308,6 +317,7 @@ def playfairDec(ciphertext, key):
                     return loc
     
     i=0
+    #decryption loop
     while i<len(msg):
         loc=list()
         loc=locindex(msg[i])
@@ -321,6 +331,7 @@ def playfairDec(ciphertext, key):
             answer=answer + ("{}{}".format(my_matrix[loc[0]][loc1[1]],my_matrix[loc1[0]][loc[1]]))    
         i=i+2  
     return answer
+    
     #Since we dont konw the  exact key at the moment we need
     #Boolean function to determine if its end of the row or 
     #the place value of the column
