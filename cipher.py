@@ -43,7 +43,6 @@ ciphertext for Decryption
 '''
 # For Encryption, user will pass in a plain text and a key
 def MonoalphabeticEnc(plaintext, key):
-
     #we required 26 unique key for this ciper
     if len(key) != 26:
         print ("Please enter 26 key for this cipher")
