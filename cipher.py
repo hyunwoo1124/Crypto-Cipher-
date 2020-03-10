@@ -187,7 +187,7 @@ def playfairEnc(plaintext, key):
     msg=plaintext
     msg=msg.upper()
     msg=msg.replace(" ", "")
-    answer=str("Encrypted Text: ")             
+    answer=str("")             
     
     def matrix(x,y,initial):
         return [[initial for i in range(x)] for j in range(y)]
@@ -239,7 +239,7 @@ def playfairEnc(plaintext, key):
     #adding X if message is odd number of characters
     if len(msg)%2!=0:
         msg=msg[:]+'X'
-    print("CIPHER TEXT:",end=' ')
+    
     i=0
     while i<len(msg):
         loc=list()
@@ -262,7 +262,7 @@ def playfairDec(ciphertext, key):
     msg=ciphertext
     msg=msg.upper()
     msg=msg.replace(" ", "")
-    answer=str("Decrypted Text: ")              
+    answer=str("")              
     
     def matrix(x,y,initial):
         return [[initial for i in range(x)] for j in range(y)]
@@ -306,7 +306,7 @@ def playfairDec(ciphertext, key):
                     loc.append(i)
                     loc.append(k)
                     return loc
-    print("PLAIN TEXT:",end=' ')
+    
     i=0
     while i<len(msg):
         loc=list()
@@ -389,7 +389,7 @@ def menu_switch(args):
             answer = playfairEnc(rf.read(),args.Key)
             with open(args.Output, 'a') as wf:
                 wf.write(answer)
-                
+
     if (args.Cipher == 'PLF' and args.Type == 'DEC'):
         with open(args.Input,'r') as rf:
             answer = vigenereDec(rf.read(),args.Key)
