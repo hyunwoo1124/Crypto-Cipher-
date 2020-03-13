@@ -1,6 +1,7 @@
 
 #parser that allows cmd line to take argument into the program
 import argparse
+from math import floor, ceil
 
 
 #while (!success) { success = try() }
@@ -418,7 +419,131 @@ def vigenereDec(ciphertext,key):
         decString.append(chr(posLetter))
         i+= 1
     return ("".join(decString))
-    
+
+def rowTranspositonEnc(plaintext,key):
+
+    if not (key.isdigit()):
+        print("PLEASE ENTER VALID NUMBER KEY FOR ROW TRANSPOSITION")
+        exit()
+
+    print("Row Transposition Encode")
+
+    #initialize index for traversing ciphertext
+    index = 0
+
+    #Get string length for Row Transposition Matrix
+    string_length = len(plaintext)
+    key_length = len(key)
+
+    #Get columns and rows for matrix
+    row = ceil(string_length/key_length)
+    column = key_length
+
+    #Debug Outs
+    # print("Plaintext: ", plaintext, "--length: ", string_length)
+    # print("key: ", key, "--length: ", key_length)
+    # print ("StringLength: ", string_length, ", Cols: ", column, ", Rows: ", row)
+
+    if (row * column < string_length):
+        row = column
+
+    #initialize matrix with 0's
+    matrix = [ [0 for j in range(column)] for i in range(row)]
+
+    # convert the plaintext into grid
+    for i in range(row):
+        for j in range(column):
+            #if index is bigger than plaintext length
+            if index >= string_length:
+                matrix[i][j] = " "
+                index += 1
+            else :
+                matrix[i][j] = plaintext[index]
+                index += 1
+
+    # print("\n--MATRIX--")
+    # # Printing the matrix out for reference
+    # for i in range(row):
+    #     for j in range(column) :
+    #         #end case
+    #         if matrix[i][j] == " " :
+    #             break
+    #         print(matrix[i][j], end = "")
+    #     print()
+    # print()
+
+    result = ""
+
+    #create ciphertext
+    #print("\n--RESULT--")
+    for i in range(column):
+        #print(key[i])
+        for j in range(row):
+            if matrix[j][int(key[i])-1] == " ":
+                #print("x")
+                result += "x"
+            else:
+                #print(matrix[j][int(key[i])])
+                result += matrix[j][int(key[i])-1]
+
+    #Print and return result
+    #print(result)
+    return result
+
+########################################################################
+#Row Transposition
+#Takes in a cipher string and key string and turns into decrypted code
+########################################################################
+# hell
+# owor
+# ld
+def rowTranspositonDec(ciphertext,key):
+
+    if not (key.isdigit()):
+        print("PLEASE ENTER VALID NUMBER KEY FOR ROW TRANSPOSITION")
+        exit()
+
+    print("Row Transposition Decode")
+
+    #initialize index for traversing ciphertext
+    index = 0
+
+    # Get row and column of matrix size
+    column = len(key)
+    row = floor(len(ciphertext)/column)
+
+    # Debug print statements
+    # print("ciphertext: ", ciphertext)
+    # print ("Cols: ", column, ", Rows: ", row)
+
+    #initialize matrix with 0's
+    matrix = [ [0 for j in range(column)] for i in range(row)]
+
+    #load in the ciphertext value into the matrix
+    for i in range(column):
+        for j in range (row):
+            matrix[j][int(key[i])-1] = ciphertext[index]
+            index += 1
+
+    #define result to load decoded value into
+    result = ""
+    index = 0
+
+    # print("\n--MATRIX--")
+    #Test Print Function
+    for i in range(row):
+        for j in range (column):
+            #if index % column == 0 and index != 0:
+                # print()
+            # print(matrix[i][j], end="")
+            index += 1
+            result += matrix[i][j]
+    # print()
+
+    # print("\n--RESULT--")
+    #Print and return result
+    # print(result)
+    return result
 
 
 def menu_switch(args):
@@ -492,11 +617,23 @@ def menu_switch(args):
                 wf.write(answer)
                 return(wf.name)
 
+    # IF ROW TRANSPOSITION ENCODE
+    if (args.Cipher == 'RTS' and args.Type == 'ENC'):
+       with open(args.Input, 'r') as rf:
+           answer = rowTranspositonEnc(rf.read(), args.Key)
+           with open (args.Output, 'a') as wf:
+               wf.write(answer)
+               return(wf.name)
 
 
+    # IF ROW TRANSPOSITION DECODE
+    if (args.Cipher == 'RTS' and args.Type == 'DEC'):
+        with open(args.Input,'r') as rf:
+            answer = rowTranspositonDec(rf.read(),args.Key)
+            with open(args.Output, 'a') as wf:
+                wf.write(answer)
+                return(wf.name)
 
-
-    
 
 if __name__ == '__main__':
     info()
